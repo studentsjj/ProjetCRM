@@ -53,7 +53,7 @@ public class OrderController {
         }
     }
 
-    @DeleteMapping("orderss/{id}")
+    @DeleteMapping("orders/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         Optional<Order> o = orderService.findById(id);
         if (o.isEmpty()) {

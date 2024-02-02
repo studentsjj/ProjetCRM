@@ -19,10 +19,12 @@ public class Order {
     private Integer nbDays;
     @Column(columnDefinition = "numeric")
     private Float unitPrice;
+    @Transient
     @Column(columnDefinition = "numeric")
-    private Float totalExcludeTaxe;
+    private Float totalExcludeTaxe=0.0f;
+    @Transient
     @Column(columnDefinition = "numeric")
-    private Float totalWithTaxe;
+    private Float totalWithTaxe=0.0f;
 
     @Enumerated
     @Column(name = "state", columnDefinition = "smallint")
@@ -89,7 +91,7 @@ public class Order {
     }
 
     public Float getTotalExcludeTaxe() {
-        return totalExcludeTaxe;
+        return nbDays*unitPrice;
     }
 
     public void setTotalExcludeTaxe(Float totalExcludeTaxe) {
@@ -97,7 +99,7 @@ public class Order {
     }
 
     public Float getTotalWithTaxe() {
-        return totalWithTaxe;
+        return  nbDays*unitPrice*1.2f;
     }
 
     public void setTotalWithTaxe(Float totalWithTaxe) {
