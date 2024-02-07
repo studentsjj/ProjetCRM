@@ -1,7 +1,9 @@
 package com.example.CRM.Controller;
 
 
+import com.example.CRM.model.Client;
 import com.example.CRM.model.Order;
+import com.example.CRM.service.ClientService;
 import com.example.CRM.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,8 @@ public class OrderController {
 
     @Autowired
     OrderService orderService;
+    @Autowired
+    ClientService clientService;
 
     @GetMapping("orders")
     public List<Order> findAll() {
@@ -34,6 +38,9 @@ public class OrderController {
 
     @PostMapping("orders")
     public ResponseEntity<?> add(@RequestBody Order order) {
+       Integer id = order.getClient().getId();
+       Optional<Client> optionalClient = clientService.findById(id);
+       if(optionalClient.isEmpty()) return ResponseEntity.badRequest().build();
         orderService.add(order);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
